@@ -63,7 +63,46 @@ private:
     ISport *m_sport = nullptr;
 };
 
+/******************************other eg*******************************************************/
 
+///行为基类
+class Action{
+public:
+    virtual void todo() =0;
+};
+
+class Write:public Action{
+public:
+    void todo(){
+        cout << "to write..."<<endl;
+    }
+};
+class Draw:public Action{
+public:
+    void todo(){
+        cout << "to draw..."<<endl;
+    }
+};
+///工具基类
+class Pen{
+public:
+    virtual ~Pen(){ destory();}
+    Pen():m_action(nullptr){}
+    virtual void use() {if(m_action) m_action->todo();};
+    void setAction(Action* action){ destory(); m_action = action;}
+private:
+    void destory(){ if(m_action) delete m_action;}
+    Action *m_action;
+};
+
+class Pencil:public Pen{
+public:
+    void use(){ std::cout << "use Pencil"<<endl; Pen::use();}
+};
+class Brush:public Pen{
+public:
+    void use(){ std::cout << "use Brush"<<endl; Pen::use();}
+};
 
 
 #endif //DESIGNMODE_BUILDER_H
